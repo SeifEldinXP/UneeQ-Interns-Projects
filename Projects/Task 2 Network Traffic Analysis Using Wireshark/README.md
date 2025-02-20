@@ -1,0 +1,2 @@
+# Network-Traffic-Analysis-Using-Wireshark
+This project demonstrates network traffic analysis using Wireshark. It includes packet capture and analysis of an ICMP flood attack to understand network behavior and it's security mitigations.

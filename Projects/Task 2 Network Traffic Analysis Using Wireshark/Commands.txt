@@ -1,0 +1,54 @@
+To GET Virtual Machine's TUNNEL IP
+------ip a | grep -A 7 'tun0'
+
+To DO A Ping Flood (ICMP Flood)
+------ping -f 10.8.0.18 -i 0.002
+
+Mitigation Strategies For Ping Flood (ICMP Flood)
+
+1- Using Iptables To Limit The Rate Of Incoming ICMP Requests:
+
+------sudo iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/s --limit-burst 5 -j ACCEPT
+------sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+
+This Rule Allows 1 ICMP Request Per Second And Allows A Burst Of 5 Requests Before Dropping Excess Requests.
+
+2- Disabling ICMP Echo Requests
+
+------sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+
+This Will Drop All Incoming Ping Requests.
+
+
+
+
+
+Wireshark Filters for IPs 10.8.0.30 and 10.8.0.18:
+
+Filter for all packets involving either IP (10.8.0.30 or 10.8.0.18):
+
+------ip.addr == 10.8.0.30 or ip.addr == 10.8.0.18
+
+Filter for only TCP traffic involving either 10.8.0.30 or 10.8.0.18:
+
+------(ip.addr == 10.8.0.30 or ip.addr == 10.8.0.18) and tcp
+
+Filter for only ICMP traffic involving 10.8.0.30 or 10.8.0.18:
+
+------(ip.addr == 10.8.0.30 or ip.addr == 10.8.0.18) and icmp
+
+Filter for only SYN packets between 10.8.0.30 and 10.8.0.18:
+
+------(ip.addr == 10.8.0.30 or ip.addr == 10.8.0.18) and tcp.flags.syn == 1
+
+Filter for UDP traffic between 10.8.0.30 and 10.8.0.18:
+
+------(ip.addr == 10.8.0.30 or ip.addr == 10.8.0.18) and udp
+
+Filter for DNS traffic (UDP port 53) between the two IPs:
+
+------(ip.addr == 10.8.0.30 or ip.addr == 10.8.0.18) and udp.port == 53
+
+Filter for packets from 10.8.0.30 to 10.8.0.18 (or vice versa) with SYN and ACK flags (part of the TCP handshake in SYN Floods):
+
+------(ip.src == 10.8.0.30 and ip.dst == 10.8.0.18 or ip.src == 10.8.0.18 and ip.dst == 10.8.0.30) and tcp.flags.syn == 1 and tcp.flags.ack == 1
