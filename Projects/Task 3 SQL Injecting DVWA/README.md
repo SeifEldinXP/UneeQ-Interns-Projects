@@ -1,0 +1,2 @@
+# SQL-Injecting-DVWA
+This project demonstrates SQL Injection attacks on Damn Vulnerable Web Application (DVWA), a purposely vulnerable web application designed for security testing and ethical hacking.
